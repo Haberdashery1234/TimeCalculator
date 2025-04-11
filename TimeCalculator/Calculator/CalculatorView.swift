@@ -48,6 +48,8 @@ struct CalculatorView: View {
             )
         }
         .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(themeManager.currentTheme.backgroundColor)
         .environment(themeManager)
     }
 }

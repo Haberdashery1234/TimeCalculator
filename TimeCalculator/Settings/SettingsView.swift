@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @Environment(ThemeManager.self) var themeManager
+    
     // Display Settings
     @AppStorage("use24HourFormat") private var use24HourFormat = true
     @AppStorage("themeMode") private var themeMode = "system"
@@ -24,8 +26,6 @@ struct SettingsView: View {
     // Accessibility
     @AppStorage("highContrastMode") private var highContrastMode = false
     @AppStorage("largeFontSize") private var largeFontSize = false
-    
-    @State private var themeManager = ThemeManager()
     
     // Available options for selections
     let themeModeOptions = ["light", "dark", "system"]
@@ -63,12 +63,13 @@ struct SettingsView: View {
                         }
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            themeManager.currentTheme = theme
+                            themeManager.setTheme(theme)
                         }
                     }
                     
                     NavigationLink("Create New Theme") {
-                        ThemeEditorView(themeManager: themeManager)
+                        ThemeEditorView()
+                            .environment(themeManager)
                     }
                 }
                 

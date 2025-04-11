@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct CalculatorPreviewView: View {
-    let themeManager: ThemeManager
+    @Environment(ThemeManager.self) var themeManager
+    
     let scale: CGFloat
     
     // Sample data for preview
@@ -16,11 +17,13 @@ struct CalculatorPreviewView: View {
     let resultValue = "02:15"
     
     var body: some View {
-        CalculatorView(themeManager: themeManager, scale: scale)
-            .allowsHitTesting(false) 
+        CalculatorView(scale: scale)
+            .allowsHitTesting(false)
+            .environment(themeManager)
     }
 }
 
 #Preview {
-    CalculatorPreviewView(themeManager: ThemeManager(), scale: 1)
+    CalculatorPreviewView(scale: 1)
+        .environment(ThemeManager())
 }

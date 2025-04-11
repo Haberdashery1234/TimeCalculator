@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ThemeEditorView: View {
-    var themeManager: ThemeManager
+    @Environment(ThemeManager.self) var themeManager
     @Environment(\.presentationMode) var presentationMode
     
     // Edit a copy of a theme or create a new one
@@ -29,9 +29,7 @@ struct ThemeEditorView: View {
     @State private var showingDisplayTextPicker = false
     @State private var showingResultTextPicker = false
     
-    init(themeManager: ThemeManager, theme: ColorTheme? = nil) {
-        self.themeManager = themeManager
-        
+    init(theme: ColorTheme? = nil) {
         // If editing existing theme, use it; otherwise create a new one
         let initialTheme = theme ?? ColorTheme(
             name: "New Theme",
@@ -67,7 +65,7 @@ struct ThemeEditorView: View {
             .padding([.leading, .trailing])
             
             Section {
-                CalculatorPreviewView(theme: editingTheme, scale: 0.5)
+                CalculatorPreviewView(scale: 0.5)
                     .frame(height: 400)
                     .padding(.vertical, 5)
             }
@@ -106,12 +104,6 @@ struct ThemeEditorView: View {
                     saveTheme()
                 }
             }
-            
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button("Cancel") {
-                    presentationMode.wrappedValue.dismiss()
-                }
-            }
         }
         .background(editingTheme.backgroundColor.edgesIgnoringSafeArea(.all))
         .foregroundColor(editingTheme.textColor)
@@ -120,7 +112,7 @@ struct ThemeEditorView: View {
     private func saveTheme() {
         // Check if editing an existing theme
         if let index = themeManager.availableThemes.firstIndex(where: { $0.id == editingTheme.id }) {
-            themeManager.availableThemes[index] = editingTheme
+            themeManager.updateTheme(editingTheme)
         } else {
             // This is a new theme
             themeManager.addTheme(editingTheme)
@@ -151,5 +143,6 @@ struct ColorPickerRow: View {
 }
 
 #Preview {
-    ThemeEditorView(themeManager: ThemeManager())
+    ThemeEditorView()
+        .environment(ThemeManager())
 }
