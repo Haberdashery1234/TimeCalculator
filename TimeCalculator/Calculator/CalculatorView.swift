@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct CalculatorView: View {
-    @Environment(ThemeManager.self) var themeManager
     @State private var viewModel = ViewModel()
+    @State var theme: ColorTheme
     
     let scale: CGFloat
     
@@ -37,6 +37,7 @@ struct CalculatorView: View {
             .padding(.horizontal)
             
             ButtonsView(
+                theme: theme,
                 scale: scale,
                 onDigitPress: viewModel.appendDigit,
                 onDoubleZeroPress: viewModel.appendDoubleZero,
@@ -49,12 +50,10 @@ struct CalculatorView: View {
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(themeManager.currentTheme.backgroundColor)
-        .environment(themeManager)
+        .background(theme.backgroundColor)
     }
 }
 
 #Preview {
-    CalculatorView(scale: 1.0)
-        .environment(ThemeManager())
+    CalculatorView(theme: ColorTheme.light, scale: 1.0)
 }

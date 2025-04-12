@@ -17,9 +17,8 @@ struct CalculatorPreviewView: View {
     let resultValue = "02:15"
     
     var body: some View {
-        CalculatorView(scale: scale)
+        CalculatorView(theme: themeManager.currentTheme, scale: scale)
             .allowsHitTesting(false)
-            .environment(themeManager)
     }
 }
 

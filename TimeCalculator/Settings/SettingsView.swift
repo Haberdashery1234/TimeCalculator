@@ -33,6 +33,8 @@ struct SettingsView: View {
     
     let historyRetentionOptions = ["1 day", "7 days", "30 days", "90 days", "forever"]
     
+    @State private var isShowingThemePicker = false
+    
     var body: some View {
         NavigationView {
             Form {
@@ -49,28 +51,12 @@ struct SettingsView: View {
                 }
                 
                 Section(header: Text("Themes")) {
-                    ForEach(themeManager.availableThemes) { theme in
-                        HStack {
-                            Circle()
-                                .fill(theme.accentColor)
-                                .frame(width: 20, height: 20)
-                            Text(theme.name)
-                            Spacer()
-                            if themeManager.currentTheme.id == theme.id {
-                                Image(systemName: "checkmark")
-                                    .foregroundColor(.blue)
-                            }
-                        }
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            themeManager.setTheme(theme)
-                        }
+                    Button {
+                        isShowingThemePicker = true
+                    } label: {
+                        Text("Choose a theme")
                     }
-                    
-                    NavigationLink("Create New Theme") {
-                        ThemeEditorView()
-                            .environment(themeManager)
-                    }
+
                 }
                 
                 // Input Methods Section
@@ -129,6 +115,10 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
+            .sheet(isPresented: $isShowingThemePicker) {
+                ThemeSelectionView()
+                    .environment(themeManager)
+            }
         }
     }
 }
@@ -136,4 +126,5 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView()
+        .environment(ThemeManager())
 }

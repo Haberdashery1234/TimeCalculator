@@ -13,8 +13,7 @@ struct MainTabView: View {
     var body: some View {
         NavigationStack {
             TabView {
-                CalculatorView(scale: 1.0)
-                    .environment(themeManager)
+                CalculatorView(theme: themeManager.currentTheme, scale: 1.0)
                     .tabItem {
                         Image(systemName: "plusminus")
                         Text("Calculator")
