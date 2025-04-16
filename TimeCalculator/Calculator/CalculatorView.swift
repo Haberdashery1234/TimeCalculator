@@ -20,12 +20,14 @@ struct CalculatorView: View {
             VStack(alignment: .trailing) {
                 Text(viewModel.fullCalculation + "\(viewModel.displayText)")
                     .font(.system(size: 60, weight: .light))
+                    .foregroundStyle(theme.displayTextColor)
                     .minimumScaleFactor(0.2)
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .trailing)
                 
                 Text(viewModel.result)
                     .font(.system(size: 24, weight: .light))
+                    .foregroundStyle(theme.resultTextColor)
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
                     .padding(.bottom)

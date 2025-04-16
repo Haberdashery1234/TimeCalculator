@@ -41,14 +41,22 @@ struct SettingsView: View {
                 // Display Section
                 Section(header: Text("Display")) {
                     Toggle("24-Hour Format", isOn: $use24HourFormat)
+                        .tint(themeManager.currentTheme.accentColor)
                     
                     Picker("Button Size", selection: $buttonSize) {
                         ForEach(buttonSizeOptions, id: \.self) { size in
                             Text(size.capitalized).tag(size)
+                                .foregroundStyle(themeManager.currentTheme.displayTextColor)
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
+                    .onAppear {
+                        
+                        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(themeManager.currentTheme.textColor)], for: .normal)
+                        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(themeManager.currentTheme.textColor)], for: .selected)
+                    }
                 }
+                .listRowBackground(themeManager.currentTheme.displayBackgroundColor)
                 
                 Section(header: Text("Themes")) {
                     HStack {
@@ -63,18 +71,21 @@ struct SettingsView: View {
                     }
 
                 }
+                .listRowBackground(themeManager.currentTheme.displayBackgroundColor)
                 
                 // Input Methods Section
                 Section(header: Text("Input")) {
-                    
                     Toggle("Haptic Feedback", isOn: $hapticFeedback)
+                        .tint(themeManager.currentTheme.accentColor)
                     
                     Toggle("Sound Effects", isOn: $soundEffects)
                 }
+                .listRowBackground(themeManager.currentTheme.displayBackgroundColor)
                 
                 // History & Data Section
                 Section(header: Text("History & Data")) {
                     Toggle("Save Calculation History", isOn: $saveHistory)
+                        .tint(themeManager.currentTheme.accentColor)
                     
                     if saveHistory {
                         Picker("History Retention", selection: $historyRetention) {
@@ -93,13 +104,17 @@ struct SettingsView: View {
                         .foregroundColor(.red)
                     }
                 }
+                .listRowBackground(themeManager.currentTheme.displayBackgroundColor)
                 
                 // Accessibility Section
                 Section(header: Text("Accessibility")) {
                     Toggle("High Contrast Mode", isOn: $highContrastMode)
+                        .tint(themeManager.currentTheme.accentColor)
                     
                     Toggle("Large Text", isOn: $largeFontSize)
+                        .tint(themeManager.currentTheme.accentColor)
                 }
+                .listRowBackground(themeManager.currentTheme.displayBackgroundColor)
                 
                 // About Section
                 Section(header: Text("About")) {
@@ -118,6 +133,7 @@ struct SettingsView: View {
                         // Feedback functionality
                     }
                 }
+                .listRowBackground(themeManager.currentTheme.displayBackgroundColor)
             }
             .navigationTitle("Settings")
             .sheet(isPresented: $isShowingThemePicker) {
@@ -126,6 +142,8 @@ struct SettingsView: View {
             }
             .scrollContentBackground(.hidden)
             .background(themeManager.currentTheme.backgroundColor)
+            .foregroundColor(themeManager.currentTheme.textColor)
+            .accentColor(themeManager.currentTheme.accentColor)
             .onAppear {
                 UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: themeManager.currentTheme.textColor]
             }

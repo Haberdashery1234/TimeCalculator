@@ -41,8 +41,8 @@ struct ColorTheme: Identifiable, Equatable, Codable {
     static let light = ColorTheme(
         name: "Light",
         backgroundColor: Color(.white),
-        textColor: Color(.white),
-        accentColor: .orange,
+        textColor: Color(.black),
+        accentColor: Color(.systemGray),
         numberButtonColor: Color(.systemGray5),
         numberTextColor: Color(.label),
         operationButtonColor: .orange,
