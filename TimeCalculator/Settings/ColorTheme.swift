@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ColorTheme: Identifiable, Equatable, Codable {
-    var id = UUID()
     var name: String
     
     // Primary colors
@@ -34,10 +33,14 @@ struct ColorTheme: Identifiable, Equatable, Codable {
     var buttonCornerRadius: CGFloat = 12
     var fontName: String = "System"
     
+    var id: String {
+        name
+    }
+    
     // Built-in themes
     static let light = ColorTheme(
         name: "Light",
-        backgroundColor: Color(.systemGray),
+        backgroundColor: Color(.white),
         textColor: Color(.white),
         accentColor: .orange,
         numberButtonColor: Color(.systemGray5),
@@ -54,10 +57,10 @@ struct ColorTheme: Identifiable, Equatable, Codable {
     
     static let dark = ColorTheme(
         name: "Dark",
-        backgroundColor: Color(.systemBackground),
-        textColor: Color(.label),
+        backgroundColor: Color(red: 0.12, green: 0.12, blue: 0.14),
+        textColor: Color(.white),
         accentColor: .orange,
-        numberButtonColor: Color(.systemGray5),
+        numberButtonColor: Color(.systemGray),
         numberTextColor: Color(.white),
         operationButtonColor: .orange,
         operationTextColor: .white,

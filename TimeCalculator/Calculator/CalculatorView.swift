@@ -32,7 +32,7 @@ struct CalculatorView: View {
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }
             .padding()
-            .background(Color(.systemGray6))
+            .background(theme.displayBackgroundColor)
             .cornerRadius(15)
             .padding(.horizontal)
             

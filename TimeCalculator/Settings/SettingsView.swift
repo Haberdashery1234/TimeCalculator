@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-
 struct SettingsView: View {
+
     @Environment(ThemeManager.self) var themeManager
     
     // Display Settings
@@ -51,6 +51,11 @@ struct SettingsView: View {
                 }
                 
                 Section(header: Text("Themes")) {
+                    HStack {
+                        Text("Current Theme: ")
+                        Text(themeManager.currentTheme.name)
+                            .foregroundColor(themeManager.currentTheme.textColor)
+                    }
                     Button {
                         isShowingThemePicker = true
                     } label: {
@@ -118,6 +123,11 @@ struct SettingsView: View {
             .sheet(isPresented: $isShowingThemePicker) {
                 ThemeSelectionView()
                     .environment(themeManager)
+            }
+            .scrollContentBackground(.hidden)
+            .background(themeManager.currentTheme.backgroundColor)
+            .onAppear {
+                UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: themeManager.currentTheme.textColor]
             }
         }
     }

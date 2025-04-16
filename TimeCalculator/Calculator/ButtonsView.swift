@@ -105,7 +105,7 @@ struct ButtonsView: View {
                 Button(action: { onDelete() }) {
                     Image(systemName: "delete.left")
                 }
-                    .buttonStyle(NumberButtonStyle(theme: theme, scale: scale))
+                .buttonStyle(FunctionButtonStyle(theme: theme, scale: scale))
                 
                 Button("=") {
                     onEquals()

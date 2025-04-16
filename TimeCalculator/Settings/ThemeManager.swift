@@ -9,7 +9,7 @@ import SwiftUI
 
 // Create a separate class for storage that does NOT use @Observable
 class ThemeStorage {
-    @AppStorage("theme.currentId") var currentThemeId: String = ColorTheme.light.id.uuidString
+    @AppStorage("theme.currentId") var currentThemeId: String = ColorTheme.light.id
     @AppStorage("theme.data") var themesData: Data = Data()
     
     // Simple accessors
@@ -44,20 +44,19 @@ class ThemeManager {
         // Load themes
         if let decoded = try? JSONDecoder().decode([ColorTheme].self, from: storage.themesData),
            !decoded.isEmpty {
-            self.availableThemes = decoded
+//            self.availableThemes = decoded
         } else {
             // Save defaults if nothing found
             saveThemes()
         }
         
         // Load current theme
-        if let themeId = UUID(uuidString: storage.currentThemeId),
-           let theme = availableThemes.first(where: { $0.id == themeId }) {
+        if let theme = availableThemes.first(where: { $0.id == storage.currentThemeId }) {
             self.currentTheme = theme
         } else {
             // Reset to default if not found
             self.currentTheme = ColorTheme.light
-            storage.saveCurrentThemeId(ColorTheme.light.id.uuidString)
+            storage.saveCurrentThemeId(ColorTheme.light.id)
         }
     }
     
@@ -94,11 +93,11 @@ class ThemeManager {
     func setTheme(_ theme: ColorTheme) {
         if availableThemes.contains(where: { $0.id == theme.id }) {
             currentTheme = theme
-            storage.saveCurrentThemeId(theme.id.uuidString)
+            storage.saveCurrentThemeId(theme.id)
         } else {
             addTheme(theme)
             currentTheme = theme
-            storage.saveCurrentThemeId(theme.id.uuidString)
+            storage.saveCurrentThemeId(theme.id)
         }
     }
     

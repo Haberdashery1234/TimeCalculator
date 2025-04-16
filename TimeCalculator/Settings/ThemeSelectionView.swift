@@ -24,10 +24,17 @@ struct ThemeSelectionView: View {
                         themeManager.setTheme(theme)
                         dismiss()
                     } label: {
-                        CalculatorView(theme: theme, scale: 0.3)
-                            .padding()
-                            .allowsHitTesting(false)
+                        VStack {
+                            Text(theme.name)
+                            CalculatorView(theme: theme, scale: 0.3)
+                                .allowsHitTesting(false)
+                        }
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.black, lineWidth: 1)
+                        )
                     }
+                    .padding()
                 }
             }
         }
