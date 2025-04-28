@@ -135,7 +135,7 @@ struct SettingsView: View {
                 }
                 .listRowBackground(themeManager.currentTheme.displayBackgroundColor)
             }
-            .navigationTitle("Settings")
+            .navigationTitle("Settings") 
             .sheet(isPresented: $isShowingThemePicker) {
                 ThemeSelectionView()
                     .environment(themeManager)
@@ -144,9 +144,7 @@ struct SettingsView: View {
             .background(themeManager.currentTheme.backgroundColor)
             .foregroundColor(themeManager.currentTheme.textColor)
             .accentColor(themeManager.currentTheme.accentColor)
-            .onAppear {
-                UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: themeManager.currentTheme.textColor]
-            }
+            .preferredColorScheme(themeManager.currentTheme.isDarkTheme ? .dark : .light)
         }
     }
 }

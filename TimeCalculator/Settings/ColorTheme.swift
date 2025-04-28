@@ -72,23 +72,6 @@ struct ColorTheme: Identifiable, Equatable, Codable {
         isDarkTheme: true
     )
     
-    static let blue = ColorTheme(
-        name: "Blue",
-        backgroundColor: Color(red: 0.05, green: 0.1, blue: 0.2),
-        textColor: .white,
-        accentColor: Color(red: 0.4, green: 0.7, blue: 1.0),
-        numberButtonColor: Color(red: 0.15, green: 0.2, blue: 0.3),
-        numberTextColor: .white,
-        operationButtonColor: Color(red: 0.4, green: 0.7, blue: 1.0),
-        operationTextColor: .white,
-        functionButtonColor: Color(red: 0.2, green: 0.3, blue: 0.4),
-        functionTextColor: .white,
-        displayBackgroundColor: Color(red: 0.1, green: 0.15, blue: 0.25),
-        displayTextColor: .white,
-        resultTextColor: Color(red: 0.4, green: 0.7, blue: 1.0),
-        isDarkTheme: true
-    )
-    
     // Add more built-in themes as needed
 }
 

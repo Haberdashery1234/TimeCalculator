@@ -52,7 +52,8 @@ struct CalculatorView: View {
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(theme.backgroundColor)
+//        .background(theme.backgroundColor)
+        .preferredColorScheme(theme.isDarkTheme ? .dark : .light)
     }
 }
 

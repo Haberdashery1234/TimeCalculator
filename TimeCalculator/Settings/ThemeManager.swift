@@ -34,7 +34,7 @@ class ThemeManager {
     init() {
         // Set defaults first
         self.currentTheme = ColorTheme.dark
-        self.availableThemes = [.light, .dark, .blue]
+        self.availableThemes = [.light, .dark]
         
         // Then load from storage
         loadFromStorage()
@@ -83,7 +83,7 @@ class ThemeManager {
         // Protect current theme and default themes
         guard theme.id != currentTheme.id else { return }
         
-        let isBaseTheme = [ColorTheme.light.id, ColorTheme.dark.id, ColorTheme.blue.id].contains(theme.id)
+        let isBaseTheme = [ColorTheme.light.id, ColorTheme.dark.id].contains(theme.id)
         if !isBaseTheme {
             availableThemes.removeAll { $0.id == theme.id }
             saveThemes()
