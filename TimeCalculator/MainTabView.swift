@@ -18,18 +18,24 @@ struct MainTabView: View {
                         Image(systemName: "plusminus")
                         Text("Calculator")
                     }
+                    .accessibilityLabel("Calculator View")
+                    .accessibilityIdentifier("Calculator View")
                 TimeCardView()
                     .environment(themeManager)
                     .tabItem {
                         Image(systemName: "tablecells")
                         Text("Time Card")
                     }
+                    .accessibilityLabel("Time Card")
+                    .accessibilityIdentifier("Time Card")
                 SettingsView()
                     .environment(themeManager)
                     .tabItem {
                         Image(systemName: "gear")
                         Text("Settings")
                     }
+                    .accessibilityLabel("Settings")
+                    .accessibilityIdentifier("Settings")
             }
         }
         .preferredColorScheme(themeManager.currentTheme.isDarkTheme ? .dark : .light)

@@ -14,6 +14,8 @@ struct TimeCardView: View {
     var body: some View {
         VStack {
             Text("Total Hours: \(String(format: "%.2f", viewModel.totalTime / 3600))")
+                .accessibilityLabel("Total hours worked")
+                .accessibilityIdentifier("Total hours label")
             List(viewModel.entries) { entry in
                 HStack {
                     Text(DateFormatter.localizedString(from: entry.date, dateStyle: .medium, timeStyle: .none))

@@ -1,0 +1,31 @@
+{
+  "configurations" : [
+    {
+      "id" : "B8DA7634-1396-4DBE-95C2-4C3DB1616917",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:TimeCalculator.xcodeproj",
+        "identifier" : "03FE603F2DA6DA730076BE21",
+        "name" : "TimeCalculatorUITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:TimeCalculator.xcodeproj",
+        "identifier" : "03FE60352DA6DA730076BE21",
+        "name" : "TimeCalculatorTests"
+      }
+    }
+  ],
+  "version" : 1
+}
