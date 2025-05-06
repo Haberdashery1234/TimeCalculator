@@ -8,24 +8,35 @@
 import SwiftUI
 
 struct MainTabView: View {
+    @Environment(ThemeManager.self) var themeManager
+    
     var body: some View {
         NavigationStack {
             TabView {
-                CalculatorView()
+                CalculatorView(theme: themeManager.currentTheme, scale: 1.0)
                     .tabItem {
                         Image(systemName: "plusminus")
                         Text("Calculator")
                     }
                 TimeCardView()
+                    .environment(themeManager)
                     .tabItem {
                         Image(systemName: "tablecells")
                         Text("Time Card")
                     }
+                SettingsView()
+                    .environment(themeManager)
+                    .tabItem {
+                        Image(systemName: "gear")
+                        Text("Settings")
+                    }
             }
         }
+        .preferredColorScheme(themeManager.currentTheme.isDarkTheme ? .dark : .light)
     }
 }
 
 #Preview {
     MainTabView()
+        .environment(ThemeManager())
 }
