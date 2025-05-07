@@ -18,7 +18,7 @@ final class CalculatorViewUITests: XCTestCase {
     }
 
     @MainActor
-    func testExample() throws {
+    func test_calculation() throws {
         let app = XCUIApplication()
         app.launchArguments = ["isRunningUITests"]
         app.launch()

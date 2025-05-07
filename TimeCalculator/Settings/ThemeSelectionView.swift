@@ -20,6 +20,7 @@ struct ThemeSelectionView: View {
         VStack {
             Text("Choose a theme")
                 .font(.title)
+                .accessibilityIdentifier("Choose a theme")
             ScrollView {
                 LazyVGrid(columns: columns) {
                     ForEach(themeManager.availableThemes) { theme in
@@ -40,6 +41,8 @@ struct ThemeSelectionView: View {
                         }
                         .padding()
                         .background( themeManager.currentTheme.backgroundColor)
+                        .accessibilityLabel("\(theme.name) theme button")
+                        .accessibilityIdentifier("\(theme.name)ThemeButton")
                     }
                 }
             }

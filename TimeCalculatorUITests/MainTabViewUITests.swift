@@ -13,7 +13,7 @@ final class MainTabViewUITests: XCTestCase {
         continueAfterFailure = false
     }
     
-    func testNavigation() throws {
+    func test_tabBarNavigation() throws {
         let app = XCUIApplication()
         app.launch()
         

@@ -26,7 +26,7 @@ struct TimeCardEntry: Identifiable {
 extension TimeCardView {
     @Observable
     class ViewModel {
-        var entries: [TimeCardEntry] = [TimeCardEntry.example]
+        var entries: [TimeCardEntry] = []
         
         var totalTime: TimeInterval {
             entries.reduce(0) { $0 + $1.endTime.timeIntervalSince($1.startTime) }
