@@ -30,6 +30,8 @@ struct TimeCardView: View {
                     Button(action: { isShowingAddEntryView = true }) {
                         Image(systemName: "plus")
                     }
+                    .accessibilityLabel("Add new time entry")
+                    .accessibilityIdentifier("AddEntryButton")
                 }
             }
             .sheet(isPresented: $isShowingAddEntryView) {

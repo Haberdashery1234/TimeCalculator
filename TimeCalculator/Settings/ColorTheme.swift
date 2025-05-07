@@ -73,6 +73,22 @@ struct ColorTheme: Identifiable, Equatable, Codable {
     )
     
     // Add more built-in themes as needed
+    static let testTheme = ColorTheme(
+        name: "Test",
+        backgroundColor: Color(red: 0.12, green: 0.12, blue: 0.14),
+        textColor: Color(.red),
+        accentColor: .green,
+        numberButtonColor: Color(.systemGray),
+        numberTextColor: Color(.white),
+        operationButtonColor: .green,
+        operationTextColor: .white,
+        functionButtonColor: Color(.systemGray3),
+        functionTextColor: Color(.white),
+        displayBackgroundColor: Color(.black),
+        displayTextColor: Color(.white),
+        resultTextColor: .green,
+        isDarkTheme: true
+    )
 }
 
 // Extension to make Color codable (needed for UserDefaults or other storage)
