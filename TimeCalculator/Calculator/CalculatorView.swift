@@ -32,11 +32,15 @@ struct CalculatorView: View {
                     .lineLimit(1)
                     .padding(.bottom)
                     .frame(maxWidth: .infinity, alignment: .trailing)
+                    .accessibilityLabel("Total Time")
+                    .accessibilityValue("Total Time: \(viewModel.result)")
+                    .accessibilityIdentifier("Total Time")
             }
             .padding()
             .background(theme.displayBackgroundColor)
             .cornerRadius(15)
             .padding(.horizontal)
+            .accessibilityElement(children: .contain)
             
             ButtonsView(
                 theme: theme,
@@ -49,11 +53,13 @@ struct CalculatorView: View {
                 onEquals: viewModel.calculate,
                 onDelete: viewModel.backspace
             )
+            .accessibilityElement(children: .contain)
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
 //        .background(theme.backgroundColor)
         .preferredColorScheme(theme.isDarkTheme ? .dark : .light)
+        .accessibilityIdentifier("Calculator View")
     }
 }
 

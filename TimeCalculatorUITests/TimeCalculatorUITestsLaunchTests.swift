@@ -18,7 +18,7 @@ final class TimeCalculatorUITestsLaunchTests: XCTestCase {
     }
 
     @MainActor
-    func testLaunch() throws {
+    func test_launch() throws {
         let app = XCUIApplication()
         app.launch()
 
