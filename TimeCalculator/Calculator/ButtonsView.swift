@@ -48,49 +48,71 @@ struct ButtonsView: View {
             HStack(spacing: 12) {
                 Button("7") { onDigitPress(7) }
                     .buttonStyle(CalculatorButtonStyle( buttonType: .number, theme: theme, scale: scale))
+                    .accessibilityLabel("number-7")
+                    .accessibilityIdentifier("number-7")
                 
                 Button("8") { onDigitPress(8) }
                     .buttonStyle(CalculatorButtonStyle(buttonType: .number, theme: theme, scale: scale))
+                    .accessibilityLabel("number-8")
+                    .accessibilityIdentifier("number-8")
                 
                 Button("9") { onDigitPress(9) }
                     .buttonStyle(CalculatorButtonStyle(buttonType: .number, theme: theme, scale: scale))
+                    .accessibilityLabel("number-9")
+                    .accessibilityIdentifier("number-9")
                 
                 Button("C") { onClear() }
                     .buttonStyle(CalculatorButtonStyle(buttonType: .function, theme: theme, scale: scale))
+                    .accessibilityLabel("function-clear")
+                    .accessibilityIdentifier("function-clear")
             }
             
             // Third row
             HStack(spacing: 12) {
                 Button("4") { onDigitPress(4) }
                     .buttonStyle(CalculatorButtonStyle(buttonType: .number, theme: theme, scale: scale))
+                    .accessibilityLabel("number-4")
+                    .accessibilityIdentifier("number-4")
                 
                 Button("5") { onDigitPress(5) }
                     .buttonStyle(CalculatorButtonStyle(buttonType: .number, theme: theme, scale: scale))
+                    .accessibilityLabel("number-5")
+                    .accessibilityIdentifier("number-5")
                 
                 Button("6") { onDigitPress(6) }
                     .buttonStyle(CalculatorButtonStyle(buttonType: .number, theme: theme, scale: scale))
+                    .accessibilityLabel("number-6")
+                    .accessibilityIdentifier("number-6")
                 
                 Button("−") {
                     onSubtraction()
                 }
                 .buttonStyle(CalculatorButtonStyle(buttonType: .operation, theme: theme, scale: scale))
+                .accessibilityLabel("operation-subtract")
+                .accessibilityIdentifier("operation-subtract")
             }
             
             // Fourth row
             HStack(spacing: 12) {
                 Button("1") { onDigitPress(1) }
                     .buttonStyle(CalculatorButtonStyle(buttonType: .number, theme: theme, scale: scale))
+                    .accessibilityLabel("number-1")
+                    .accessibilityIdentifier("number-1")
                 
                 Button("2") { onDigitPress(2) }
                     .buttonStyle(CalculatorButtonStyle(buttonType: .number, theme: theme, scale: scale))
+                    .accessibilityLabel("number-2")
+                    .accessibilityIdentifier("number-2")
                 
                 Button("3") { onDigitPress(3) }
                     .buttonStyle(CalculatorButtonStyle(buttonType: .number, theme: theme, scale: scale))
+                    .accessibilityLabel("number-3")
+                    .accessibilityIdentifier("number-3")
                 
-                Button("+") {
-                    onAddition()
-                }
-                .buttonStyle(CalculatorButtonStyle(buttonType: .operation, theme: theme, scale: scale))
+                Button("+") { onAddition() }
+                    .buttonStyle(CalculatorButtonStyle(buttonType: .operation, theme: theme, scale: scale))
+                    .accessibilityLabel("operation-add")
+                    .accessibilityIdentifier("operation-add")
             }
             
             // Fifth row
@@ -100,17 +122,25 @@ struct ButtonsView: View {
                     Image(systemName: "delete.left")
                 }
                 .buttonStyle(CalculatorButtonStyle(buttonType: .function, theme: theme, scale: scale))
+                .accessibilityLabel("function-delete")
+                .accessibilityIdentifier("function-delete")
                 
                 Button("0") { onDigitPress(0) }
                     .buttonStyle(CalculatorButtonStyle(buttonType: .number, theme: theme, scale: scale))
+                    .accessibilityLabel("number-0")
+                    .accessibilityIdentifier("number-0")
                 
                 Button("00") { onDoubleZeroPress() }
                     .buttonStyle(CalculatorButtonStyle(buttonType: .number, theme: theme, scale: scale))
+                    .accessibilityLabel("number-double-zero")
+                    .accessibilityIdentifier("number-00")
                 
                 Button("=") {
                     onEquals()
                 }
                 .buttonStyle(CalculatorButtonStyle(buttonType: .operation, theme: theme, scale: scale))
+                .accessibilityLabel("operation-equal")
+                .accessibilityIdentifier("operation-equal")
             }
         }
         .padding()

@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		031600932DCA970B005E99EB /* TestPlan.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = 031600922DCA970B005E99EB /* TestPlan.xctestplan */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		03FE60372DA6DA730076BE21 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,14 +28,64 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		031600922DCA970B005E99EB /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
 		03FE60252DA6DA720076BE21 /* TimeCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03FE60362DA6DA730076BE21 /* TimeCalculatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimeCalculatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		03FE60402DA6DA730076BE21 /* TimeCalculatorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimeCalculatorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		031600912DCA8D0C005E99EB /* Exceptions for "TimeCalculator" folder in "TimeCalculatorTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Calculator/ButtonsView.swift,
+				Calculator/CalculatorView_ViewModel.swift,
+				Calculator/CalculatorView.swift,
+				CoreLogic/CalculationModel.swift,
+				MainTabView.swift,
+				Settings/CalculatorPreviewView.swift,
+				Settings/ColorTheme.swift,
+				Settings/SettingsView.swift,
+				Settings/ThemeEditorView.swift,
+				Settings/ThemeManager.swift,
+				Settings/ThemeSelectionView.swift,
+				TimeCalculatorApp.swift,
+				TimeCard/AddTimeCardEntryView.swift,
+				TimeCard/TimeCardView_ViewModel.swift,
+				TimeCard/TimeCardView.swift,
+			);
+			target = 03FE60352DA6DA730076BE21 /* TimeCalculatorTests */;
+		};
+		031600C52DCAA6DE005E99EB /* Exceptions for "TimeCalculator" folder in "TimeCalculatorUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Calculator/ButtonsView.swift,
+				Calculator/CalculatorView_ViewModel.swift,
+				Calculator/CalculatorView.swift,
+				CoreLogic/CalculationModel.swift,
+				MainTabView.swift,
+				Settings/CalculatorPreviewView.swift,
+				Settings/ColorTheme.swift,
+				Settings/SettingsView.swift,
+				Settings/ThemeEditorView.swift,
+				Settings/ThemeManager.swift,
+				Settings/ThemeSelectionView.swift,
+				TimeCalculatorApp.swift,
+				TimeCard/AddTimeCardEntryView.swift,
+				TimeCard/TimeCardView_ViewModel.swift,
+				TimeCard/TimeCardView.swift,
+			);
+			target = 03FE603F2DA6DA730076BE21 /* TimeCalculatorUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		03FE60272DA6DA720076BE21 /* TimeCalculator */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				031600912DCA8D0C005E99EB /* Exceptions for "TimeCalculator" folder in "TimeCalculatorTests" target */,
+				031600C52DCAA6DE005E99EB /* Exceptions for "TimeCalculator" folder in "TimeCalculatorUITests" target */,
+			);
 			path = TimeCalculator;
 			sourceTree = "<group>";
 		};
@@ -75,6 +129,7 @@
 		03FE601C2DA6DA720076BE21 = {
 			isa = PBXGroup;
 			children = (
+				031600922DCA970B005E99EB /* TestPlan.xctestplan */,
 				03FE60272DA6DA720076BE21 /* TimeCalculator */,
 				03FE60392DA6DA730076BE21 /* TimeCalculatorTests */,
 				03FE60432DA6DA730076BE21 /* TimeCalculatorUITests */,
@@ -212,6 +267,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				031600932DCA970B005E99EB /* TestPlan.xctestplan in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

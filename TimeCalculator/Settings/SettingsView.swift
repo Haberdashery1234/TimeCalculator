@@ -69,6 +69,7 @@ struct SettingsView: View {
                     } label: {
                         Text("Choose a theme")
                     }
+                    .accessibilityIdentifier("ChooseTheme")
 
                 }
                 .listRowBackground(themeManager.currentTheme.displayBackgroundColor)
