@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TimeCardView: View {
-    @State var viewModel = ViewModel()
+    @State var viewModel = TimeCardViewModel()
     @State var isShowingAddEntryView = false
     
     var body: some View {

@@ -1,8 +1,8 @@
 //
-//  File.swift
+//  TimeCardEntry.swift
 //  TimeCalculator
 //
-//  Created by Christian Grise on 4/10/25.
+//  Created by Christian Grise on 8/25/26.
 //
 
 import Foundation
@@ -21,15 +21,4 @@ struct TimeCardEntry: Identifiable {
         startTime: Date(),
         endTime: Date().addingTimeInterval(3600)
     )
-}
-
-extension TimeCardView {
-    @Observable
-    class ViewModel {
-        var entries: [TimeCardEntry] = [TimeCardEntry.example]
-        
-        var totalTime: TimeInterval {
-            entries.reduce(0) { $0 + $1.endTime.timeIntervalSince($1.startTime) }
-        }
-    }
 }
