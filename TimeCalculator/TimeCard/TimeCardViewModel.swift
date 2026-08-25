@@ -12,6 +12,6 @@ final class TimeCardViewModel {
     var entries: [TimeCardEntry] = [TimeCardEntry.example]
     
     var totalTime: TimeInterval {
-        entries.reduce(0) { $0 + $1.endTime.timeIntervalSince($1.startTime) }
+        entries.reduce(0) { $0 + $1.endDate.timeIntervalSince($1.startDate) }
     }
 }

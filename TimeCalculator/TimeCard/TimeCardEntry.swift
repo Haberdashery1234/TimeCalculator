@@ -9,16 +9,23 @@ import Foundation
 
 struct TimeCardEntry: Identifiable {
     var id: UUID = UUID()
-    var date: Date
-    var startTime: Date
-    var endTime: Date
+    var startDate: Date
+    var endDate: Date
+    
     var hours: Double {
-        Double(endTime.timeIntervalSince(startTime)) / 3600
+        Double(endDate.timeIntervalSince(startDate)) / 3600
     }
     
-    static var example = TimeCardEntry(
-        date: Date(),
-        startTime: Date(),
-        endTime: Date().addingTimeInterval(3600)
-    )
+    /// The primary date for this entry (uses the start date)
+    var date: Date {
+        startDate
+    }
+    
+    static let example: TimeCardEntry = {
+        let now = Date()
+        return TimeCardEntry(
+            startDate: now,
+            endDate: now.addingTimeInterval(3600)
+        )
+    }()
 }

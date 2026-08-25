@@ -25,9 +25,8 @@ struct TimeCardEntryTests {
     @Test("An 8-hour shift computes hours correctly")
     func normalShiftHours() {
         let entry = TimeCardEntry(
-            date: date(hour: 0, minute: 0),
-            startTime: date(hour: 9, minute: 0),
-            endTime: date(hour: 17, minute: 0)
+            startDate: date(hour: 9, minute: 0, day: 1),
+            endDate: date(hour: 17, minute: 0, day: 1)
         )
 
         #expect(entry.hours == 8.0)
@@ -36,9 +35,8 @@ struct TimeCardEntryTests {
     @Test("A shift with a partial hour computes a fractional value")
     func partialHourShift() {
         let entry = TimeCardEntry(
-            date: date(hour: 0, minute: 0),
-            startTime: date(hour: 9, minute: 0),
-            endTime: date(hour: 13, minute: 30)
+            startDate: date(hour: 9, minute: 0, day: 1),
+            endDate: date(hour: 13, minute: 30, day: 1)
         )
 
         #expect(entry.hours == 4.5)
@@ -46,32 +44,53 @@ struct TimeCardEntryTests {
 
     @Test("A zero-length shift computes zero hours")
     func zeroLengthShift() {
-        let sameTime = date(hour: 9, minute: 0)
-        let entry = TimeCardEntry(date: sameTime, startTime: sameTime, endTime: sameTime)
+        let sameTime = date(hour: 9, minute: 0, day: 1)
+        let entry = TimeCardEntry(startDate: sameTime, endDate: sameTime)
 
         #expect(entry.hours == 0.0)
     }
 
-    // NOTE: this is left disabled rather than fixed - the audit flagged the
-    // overnight-shift bug (issue #2), but fixing it means changing how
-    // AddTimeCardEntryView builds startTime/endTime (tying them to the
-    // selected date and detecting an end time that's "earlier" than start as
-    // the next day), which is a separate, larger change from the calculator
-    // fix made in this pass. Enable this once that's addressed.
-    @Test(
-        "KNOWN BUG (audit #2): an overnight shift currently produces negative hours",
-        .disabled("Needs AddTimeCardEntryView/TimeCardEntry to be overnight-aware before this can pass")
-    )
-    func overnightShiftShouldStayPositive() {
-        // A 22:00 -> 06:00 shift should be 8 hours, not -16. Today, start and
-        // end share the same calendar day (nothing rolls the end time to the
-        // next day), so this currently comes out negative.
+    @Test("An overnight shift from 22:00 to 06:00 computes 8 hours")
+    func overnightShiftStaysPositive() {
+        // Start at 22:00 on day 1, end at 06:00 on day 2
         let entry = TimeCardEntry(
-            date: date(hour: 0, minute: 0),
-            startTime: date(hour: 22, minute: 0),
-            endTime: date(hour: 6, minute: 0)
+            startDate: date(hour: 22, minute: 0, day: 1),
+            endDate: date(hour: 6, minute: 0, day: 2)
         )
 
         #expect(entry.hours == 8.0)
+    }
+    
+    @Test("An overnight shift from 23:30 to 07:45 computes correct hours")
+    func overnightShiftWithPartialHours() {
+        // Start at 23:30 on day 1, end at 07:45 on day 2
+        // Should be 8.25 hours (8 hours 15 minutes)
+        let entry = TimeCardEntry(
+            startDate: date(hour: 23, minute: 30, day: 1),
+            endDate: date(hour: 7, minute: 45, day: 2)
+        )
+
+        #expect(entry.hours == 8.25)
+    }
+    
+    @Test("End date before start date produces negative hours")
+    func endBeforeStartIsNegative() {
+        let entry = TimeCardEntry(
+            startDate: date(hour: 17, minute: 0, day: 2),
+            endDate: date(hour: 9, minute: 0, day: 1)
+        )
+
+        #expect(entry.hours < 0)
+    }
+    
+    @Test("Date property returns the start date")
+    func datePropertyReturnsStartDate() {
+        let startDate = date(hour: 9, minute: 0, day: 5)
+        let entry = TimeCardEntry(
+            startDate: startDate,
+            endDate: date(hour: 17, minute: 0, day: 5)
+        )
+
+        #expect(entry.date == startDate)
     }
 }

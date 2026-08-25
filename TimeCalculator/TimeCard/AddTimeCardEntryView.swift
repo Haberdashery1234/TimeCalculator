@@ -9,10 +9,7 @@ import SwiftUI
 
 struct AddTimeCardEntryView: View {
     @Environment(\.dismiss) var dismiss
-    
-    @State var date: Date = Date()
-    @State var startTime: Date = Date()
-    @State var endTime: Date = Date()
+    @State private var viewModel = AddTimeCardEntryViewModel()
     
     var onAdd: (TimeCardEntry) -> Void
     
@@ -22,29 +19,56 @@ struct AddTimeCardEntryView: View {
     
     var body: some View {
         Form {
-            DatePicker(
-                "Date",
-                selection: $date,
-                displayedComponents: [.date]
-            )
-            DatePicker(
-                "Start Time",
-                selection: $startTime,
-                displayedComponents: [.hourAndMinute]
-            )
-            DatePicker(
-                "End Time",
-                selection: $endTime,
-                displayedComponents: [.hourAndMinute]
-            )
-            Button("Add") {
-                onAdd(TimeCardEntry(date: date, startTime: startTime, endTime: endTime))
+            Section("Start") {
+                DatePicker(
+                    "Date & Time",
+                    selection: $viewModel.startDate,
+                    displayedComponents: [.date, .hourAndMinute]
+                )
+                .onChange(of: viewModel.startDate) { oldValue, newValue in
+                    // Only update if the date actually changed
+                    if !Calendar.current.isDate(oldValue, inSameDayAs: newValue) {
+                        viewModel.handleStartDateChange()
+                    }
+                }
+            }
+            
+            Section("End") {
+                Toggle("Overnight Shift", isOn: $viewModel.isOvernightShift)
+                    .onChange(of: viewModel.isOvernightShift) { _, newValue in
+                        viewModel.handleOvernightToggle(newValue)
+                    }
+                
+                DatePicker(
+                    "Date & Time",
+                    selection: $viewModel.endDate,
+                    displayedComponents: [.date, .hourAndMinute]
+                )
+            }
+            
+            Section {
+                HStack {
+                    Text("Duration")
+                    Spacer()
+                    Text(viewModel.formattedDuration)
+                        .foregroundStyle(viewModel.isValid ? Color.secondary : Color.red)
+                }
+            }
+            
+            Button("Add Entry") {
+                onAdd(viewModel.createEntry())
                 dismiss()
             }
+            .disabled(!viewModel.isValid)
         }
+        .navigationTitle("Add Time Entry")
     }
 }
 
 #Preview {
-    AddTimeCardEntryView() { _ in }
+    NavigationStack {
+        AddTimeCardEntryView() { _ in }
+    }
 }
+
+

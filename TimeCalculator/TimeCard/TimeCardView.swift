@@ -14,14 +14,18 @@ struct TimeCardView: View {
     var body: some View {
         VStack {
             Text("Total Hours: \(String(format: "%.2f", viewModel.totalTime / 3600))")
-            List(viewModel.entries) { entry in
-                HStack {
-                    Text(DateFormatter.localizedString(from: entry.date, dateStyle: .medium, timeStyle: .none))
-                    Spacer()
-                    Text(DateFormatter.localizedString(from: entry.startTime, dateStyle: .none, timeStyle: .short) + "-" + DateFormatter.localizedString(from: entry.endTime, dateStyle: .none, timeStyle: .short))
+                .font(.headline)
+                .padding()
+            
+            List {
+                ForEach(viewModel.entries) { entry in
+                    TimeCardEntryRowView(entry: entry)
+                    .padding(.vertical, 4)
+                }
+                .onDelete { indexSet in
+                    viewModel.entries.remove(atOffsets: indexSet)
                 }
             }
-            .padding()
             .navigationTitle("Time Card")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -31,8 +35,10 @@ struct TimeCardView: View {
                 }
             }
             .sheet(isPresented: $isShowingAddEntryView) {
-                AddTimeCardEntryView() { newEntry in
-                    viewModel.entries.append(newEntry)
+                NavigationStack {
+                    AddTimeCardEntryView() { newEntry in
+                        viewModel.entries.append(newEntry)
+                    }
                 }
             }
         }
@@ -40,5 +46,7 @@ struct TimeCardView: View {
 }
 
 #Preview {
-    TimeCardView()
+    NavigationStack {
+        TimeCardView()
+    }
 }
