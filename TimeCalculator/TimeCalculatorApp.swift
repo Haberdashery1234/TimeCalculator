@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct TimeCalculatorApp: App {
@@ -13,5 +14,6 @@ struct TimeCalculatorApp: App {
         WindowGroup {
             MainTabView()
         }
+        .modelContainer(for: TimeCardEntry.self)
     }
 }

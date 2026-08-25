@@ -98,10 +98,14 @@ struct NumberButtonStyle: ButtonStyle {
         configuration.label
             .font(.title)
             .frame(width: 70, height: 70)
-            .background(Color(.systemGray5))
+            .background(
+                Circle()
+                    .fill(Color(.systemGray5))
+                    .shadow(color: .black.opacity(configuration.isPressed ? 0 : 0.1), radius: 4, x: 0, y: 2)
+            )
             .foregroundColor(.primary)
-            .cornerRadius(35)
-            .scaleEffect(configuration.isPressed ? 0.95 : 1)
+            .scaleEffect(configuration.isPressed ? 0.92 : 1)
+            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
     }
 }
 
@@ -110,10 +114,14 @@ struct FunctionButtonStyle: ButtonStyle {
         configuration.label
             .font(.title)
             .frame(width: 70, height: 70)
-            .background(Color(.systemGray4))
+            .background(
+                Circle()
+                    .fill(Color(.systemGray4))
+                    .shadow(color: .black.opacity(configuration.isPressed ? 0 : 0.1), radius: 4, x: 0, y: 2)
+            )
             .foregroundColor(.primary)
-            .cornerRadius(35)
-            .scaleEffect(configuration.isPressed ? 0.95 : 1)
+            .scaleEffect(configuration.isPressed ? 0.92 : 1)
+            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
     }
 }
 
@@ -122,9 +130,13 @@ struct OperationButtonStyle: ButtonStyle {
         configuration.label
             .font(.title)
             .frame(width: 70, height: 70)
-            .background(Color.orange)
+            .background(
+                Circle()
+                    .fill(Color.orange)
+                    .shadow(color: Color.orange.opacity(configuration.isPressed ? 0 : 0.3), radius: 4, x: 0, y: 2)
+            )
             .foregroundColor(.white)
-            .cornerRadius(35)
-            .scaleEffect(configuration.isPressed ? 0.95 : 1)
+            .scaleEffect(configuration.isPressed ? 0.92 : 1)
+            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
     }
 }

@@ -50,34 +50,6 @@ struct TimeCardEntryRowViewModelTests {
         #expect(viewModel.formattedEntryDate.contains("Jan 2"))
     }
     
-    @Test("Formats start time correctly")
-    func formatsStartTime() {
-        let entry = TimeCardEntry(
-            startDate: date(hour: 9, minute: 30, day: 1),
-            endDate: date(hour: 17, minute: 0, day: 1)
-        )
-        let viewModel = TimeCardEntryRowViewModel(entry: entry)
-        
-        // Should contain time components (format may vary by locale)
-        let startTime = viewModel.formattedStartTime
-        #expect(startTime.contains("9") || startTime.contains("09"))
-        #expect(startTime.contains("30"))
-    }
-    
-    @Test("Formats end time correctly")
-    func formatsEndTime() {
-        let entry = TimeCardEntry(
-            startDate: date(hour: 9, minute: 0, day: 1),
-            endDate: date(hour: 17, minute: 45, day: 1)
-        )
-        let viewModel = TimeCardEntryRowViewModel(entry: entry)
-        
-        // Should contain time components (format may vary by locale)
-        let endTime = viewModel.formattedEndTime
-        #expect(endTime.contains("5") || endTime.contains("17"))
-        #expect(endTime.contains("45"))
-    }
-    
     @Test("View model updates when entry changes")
     func viewModelUpdatesWithEntry() {
         let entry1 = TimeCardEntry(

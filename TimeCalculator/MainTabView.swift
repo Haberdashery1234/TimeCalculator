@@ -9,18 +9,21 @@ import SwiftUI
 
 struct MainTabView: View {
     var body: some View {
-        NavigationStack {
-            TabView {
+        TabView {
+            NavigationStack {
                 CalculatorView()
-                    .tabItem {
-                        Image(systemName: "plusminus")
-                        Text("Calculator")
-                    }
+            }
+            .tabItem {
+                Image(systemName: "plusminus")
+                Text("Calculator")
+            }
+            
+            NavigationStack {
                 TimeCardView()
-                    .tabItem {
-                        Image(systemName: "tablecells")
-                        Text("Time Card")
-                    }
+            }
+            .tabItem {
+                Image(systemName: "tablecells")
+                Text("Time Card")
             }
         }
     }

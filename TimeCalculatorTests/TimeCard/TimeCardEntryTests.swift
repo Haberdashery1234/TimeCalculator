@@ -93,4 +93,66 @@ struct TimeCardEntryTests {
 
         #expect(entry.date == startDate)
     }
+    
+    @Test("Formats entry date correctly")
+    func formatsEntryDate() {
+        let entry = TimeCardEntry(
+            startDate: date(hour: 9, minute: 30, day: 1),
+            endDate: date(hour: 17, minute: 0, day: 1)
+        )
+        
+        // Should contain date components (format may vary by locale)
+        let entryDate = entry.formattedEntryDate
+        #expect(!entryDate.isEmpty)
+        #expect(entryDate.contains("Jan") || entryDate.contains("1"))
+    }
+    
+    @Test("Formats start time correctly")
+    func formatsStartTime() {
+        let entry = TimeCardEntry(
+            startDate: date(hour: 9, minute: 30, day: 1),
+            endDate: date(hour: 17, minute: 0, day: 1)
+        )
+        
+        // Should contain time components (format may vary by locale)
+        let startTime = entry.formattedStartTime
+        #expect(!startTime.isEmpty)
+        #expect(startTime.contains("9") && startTime.contains("30"))
+    }
+    
+    @Test("Formats end time correctly")
+    func formatsEndTime() {
+        let entry = TimeCardEntry(
+            startDate: date(hour: 9, minute: 0, day: 1),
+            endDate: date(hour: 17, minute: 45, day: 1)
+        )
+        
+        // Should contain time components (format may vary by locale)
+        let endTime = entry.formattedEndTime
+        #expect(!endTime.isEmpty)
+        #expect(endTime.contains("5") || endTime.contains("17"))
+        #expect(endTime.contains("45"))
+    }
+    
+    @Test("Formats total time correctly")
+    func formatsTotalTime() {
+        let viewModel = TimeCardViewModel()
+        viewModel.entries = [
+            TimeCardEntry(
+                startDate: date(hour: 9, minute: 0, day: 1),
+                endDate: date(hour: 17, minute: 0, day: 1)
+            ),
+            TimeCardEntry(
+                startDate: date(hour: 8, minute: 0, day: 2),
+                endDate: date(hour: 12, minute: 30, day: 2)
+            )
+        ]
+
+        // 8h + 4.5h = 12.5h = 45,000 seconds
+        #expect(viewModel.totalTime == 45000)
+        
+        // Should contain time components (format may vary by locale)
+        let totalTime = viewModel.formattedTotalTime
+        #expect(totalTime == "12:30")
+    }
 }

@@ -14,4 +14,10 @@ final class TimeCardViewModel {
     var totalTime: TimeInterval {
         entries.reduce(0) { $0 + $1.endDate.timeIntervalSince($1.startDate) }
     }
+    
+    var formattedTotalTime: String {
+        let hours = Int(totalTime) / 3600
+        let minutes = (Int(totalTime) % 3600) / 60
+        return String(format: "%d:%02d", hours, minutes)
+    }
 }

@@ -14,30 +14,33 @@ struct CalculatorView: View {
     // MARK: - UI
     var body: some View {
         VStack(spacing: 20) {
-            // Header
-            Text("Time Calculator")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding(.top, 30)
+            Spacer()
             
             // Display
-            VStack(alignment: .trailing) {
+            VStack(alignment: .trailing, spacing: 8) {
+                // Expression text
                 Text(viewModel.expression + viewModel.displayText)
-                    .font(.system(size: 60, weight: .light))
+                    .font(.system(size: 60, weight: .light, design: .rounded))
                     .minimumScaleFactor(0.2)
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .trailing)
+                    .accessibilityLabel("Current input: \(viewModel.displayText)")
                 
+                // Result text
                 Text(viewModel.resultText)
-                    .font(.system(size: 24, weight: .light))
+                    .font(.system(size: 28, weight: .regular, design: .rounded))
+                    .foregroundStyle(.secondary)
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
-                    .padding(.bottom)
                     .frame(maxWidth: .infinity, alignment: .trailing)
+                    .accessibilityLabel("Result: \(viewModel.resultText)")
             }
             .padding()
-            .background(Color(.systemGray6))
-            .cornerRadius(15)
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color(.systemGray6))
+                    .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 5)
+            )
             .padding(.horizontal)
             
             ButtonsView(
@@ -51,6 +54,73 @@ struct CalculatorView: View {
             )
         }
         .padding()
+        .navigationTitle("Time Calculator")
+        .navigationBarTitleDisplayMode(.inline)
+        // Keyboard shortcuts for macOS/iPadOS
+        .onKeyPress(.delete) { 
+            viewModel.backspace()
+            return .handled
+        }
+        .onKeyPress(.return) {
+            viewModel.calculate()
+            return .handled
+        }
+        .onKeyPress("=") {
+            viewModel.calculate()
+            return .handled
+        }
+        .onKeyPress("+") {
+            viewModel.performOperation("+")
+            return .handled
+        }
+        .onKeyPress("-") {
+            viewModel.performOperation("-")
+            return .handled
+        }
+        .onKeyPress("c") {
+            viewModel.clear()
+            return .handled
+        }
+        .onKeyPress("0") {
+            viewModel.appendDigit(0)
+            return .handled
+        }
+        .onKeyPress("1") {
+            viewModel.appendDigit(1)
+            return .handled
+        }
+        .onKeyPress("2") {
+            viewModel.appendDigit(2)
+            return .handled
+        }
+        .onKeyPress("3") {
+            viewModel.appendDigit(3)
+            return .handled
+        }
+        .onKeyPress("4") {
+            viewModel.appendDigit(4)
+            return .handled
+        }
+        .onKeyPress("5") {
+            viewModel.appendDigit(5)
+            return .handled
+        }
+        .onKeyPress("6") {
+            viewModel.appendDigit(6)
+            return .handled
+        }
+        .onKeyPress("7") {
+            viewModel.appendDigit(7)
+            return .handled
+        }
+        .onKeyPress("8") {
+            viewModel.appendDigit(8)
+            return .handled
+        }
+        .onKeyPress("9") {
+            viewModel.appendDigit(9)
+            return .handled
+        }
     }
 }
 

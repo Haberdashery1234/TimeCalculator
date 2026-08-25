@@ -11,6 +11,18 @@ import Testing
 @Suite("Calculator ViewModel Tests")
 struct CalculatorViewModelTests {
 
+    // MARK: - Test Helpers
+
+    /// Helper to enter a time value like "01:30" by appending digits 1, 3, 0
+    private func enterTime(_ viewModel: CalculatorViewModel, hours: Int, minutes: Int) {
+        let timeString = String(format: "%d%02d", hours, minutes)
+        for char in timeString {
+            if let digit = Int(String(char)) {
+                viewModel.appendDigit(digit)
+            }
+        }
+    }
+
     // MARK: - Digit entry
 
     @Test("Appending digits formats time correctly")
@@ -359,5 +371,230 @@ struct CalculatorViewModelTests {
 
         #expect(viewModel.displayText == "02:00")
         #expect(viewModel.isNegative == false)
+    }
+
+    // MARK: - Edge Cases & Boundary Conditions
+
+    @Test("Maximum reasonable time value displays correctly")
+    func maximumTimeValue() {
+        let viewModel = CalculatorViewModel()
+
+        // Test a very large number of hours (e.g., 9999:59)
+        for digit in [9, 9, 9, 9, 5, 9] {
+            viewModel.appendDigit(digit)
+        }
+
+        #expect(viewModel.displayText == "9999:59")
+    }
+
+    @Test("Single digit entry formats with leading zeros")
+    func singleDigitEntry() {
+        let viewModel = CalculatorViewModel()
+
+        viewModel.appendDigit(5)
+
+        #expect(viewModel.displayText == "00:05")
+    }
+
+    @Test("Minutes portion correctly displays values 00-59")
+    func minutesDisplayCorrectly() {
+        let viewModel = CalculatorViewModel()
+
+        // Test 00:59
+        viewModel.appendDigit(5)
+        viewModel.appendDigit(9)
+
+        #expect(viewModel.displayText == "00:59")
+
+        viewModel.clear()
+
+        // Test 01:23
+        viewModel.appendDigit(1)
+        viewModel.appendDigit(2)
+        viewModel.appendDigit(3)
+
+        #expect(viewModel.displayText == "01:23")
+    }
+
+    @Test("Performing operation immediately after equals continues calculation correctly")
+    func operationAfterEquals() {
+        let viewModel = CalculatorViewModel()
+
+        // 02:00 + 03:00 = 05:00, then + 01:00 = 06:00
+        viewModel.appendDigit(2)
+        viewModel.appendDoubleZero()
+        viewModel.performOperation("+")
+        viewModel.appendDigit(3)
+        viewModel.appendDoubleZero()
+        viewModel.calculate()
+
+        #expect(viewModel.displayText == "05:00")
+
+        viewModel.performOperation("+")
+        viewModel.appendDigit(1)
+        viewModel.appendDoubleZero()
+        viewModel.calculate()
+
+        #expect(viewModel.displayText == "06:00")
+    }
+
+    @Test("Multiple backspaces clear current input completely")
+    func multipleBackspaces() {
+        let viewModel = CalculatorViewModel()
+
+        viewModel.appendDigit(1)
+        viewModel.appendDigit(2)
+        viewModel.appendDigit(3)
+        viewModel.appendDigit(4)
+
+        viewModel.backspace()
+        viewModel.backspace()
+        viewModel.backspace()
+        viewModel.backspace()
+
+        #expect(viewModel.displayText == "00:00")
+    }
+
+    @Test("Expression text updates correctly during operations")
+    func expressionTextUpdates() {
+        let viewModel = CalculatorViewModel()
+
+        viewModel.appendDigit(2)
+        viewModel.appendDoubleZero()
+
+        #expect(viewModel.expression == "")
+
+        viewModel.performOperation("+")
+
+        #expect(viewModel.expression == "02:00 + ")
+
+        viewModel.appendDigit(1)
+        viewModel.appendDigit(3)
+        viewModel.appendDigit(0)
+        viewModel.performOperation("-")
+
+        #expect(viewModel.expression == "02:00 + 01:30 - ")
+    }
+
+    @Test("Expression clears after calculation")
+    func expressionClearsAfterCalculation() {
+        let viewModel = CalculatorViewModel()
+
+        viewModel.appendDigit(1)
+        viewModel.appendDoubleZero()
+        viewModel.performOperation("+")
+        viewModel.appendDigit(2)
+        viewModel.appendDoubleZero()
+
+        #expect(viewModel.expression != "")
+
+        viewModel.calculate()
+
+        #expect(viewModel.expression == "")
+    }
+
+    @Test("Result text shows zero initially")
+    func initialResultText() {
+        let viewModel = CalculatorViewModel()
+
+        #expect(viewModel.resultText == "00:00")
+    }
+
+    @Test("Subtracting from zero produces negative result")
+    func subtractFromZero() {
+        let viewModel = CalculatorViewModel()
+
+        // 00:00 - 01:00 = -01:00
+        viewModel.performOperation("-")
+        viewModel.appendDigit(1)
+        viewModel.appendDoubleZero()
+        viewModel.calculate()
+
+        #expect(viewModel.displayText == "-01:00")
+        #expect(viewModel.isNegative == true)
+    }
+
+    @Test("Adding to zero with no prior operation works correctly")
+    func addToZero() {
+        let viewModel = CalculatorViewModel()
+
+        // 00:00 + 02:30 = 02:30
+        viewModel.performOperation("+")
+        viewModel.appendDigit(2)
+        viewModel.appendDigit(3)
+        viewModel.appendDigit(0)
+        viewModel.calculate()
+
+        #expect(viewModel.displayText == "02:30")
+    }
+
+    // MARK: - Performance & Stress Tests
+
+    @Test("Long chain of operations completes without performance issues")
+    func longChainOfOperations() {
+        let viewModel = CalculatorViewModel()
+
+        // Build a long chain: start at 10:00 and add/subtract 1:00 twenty times
+        enterTime(viewModel, hours: 10, minutes: 0)
+
+        for _ in 0..<20 {
+            viewModel.performOperation("+")
+            enterTime(viewModel, hours: 1, minutes: 0)
+        }
+
+        viewModel.calculate()
+
+        // 10:00 + 20 * 01:00 = 30:00
+        #expect(viewModel.displayText == "30:00")
+    }
+
+    @Test("Rapid digit entry and backspace operations remain consistent")
+    func rapidDigitOperations() {
+        let viewModel = CalculatorViewModel()
+
+        // Rapidly enter and delete digits
+        for _ in 0..<10 {
+            viewModel.appendDigit(1)
+            viewModel.appendDigit(2)
+            viewModel.appendDigit(3)
+            viewModel.backspace()
+            viewModel.backspace()
+            viewModel.backspace()
+        }
+
+        #expect(viewModel.displayText == "00:00")
+        #expect(viewModel.expression == "")
+    }
+
+    // MARK: - Integration Tests
+
+    @Test("Complex real-world scenario: calculating weekly hours")
+    func complexWeeklyHoursScenario() {
+        let viewModel = CalculatorViewModel()
+
+        // Monday: 8:30
+        enterTime(viewModel, hours: 8, minutes: 30)
+        viewModel.performOperation("+")
+
+        // Tuesday: 9:15
+        enterTime(viewModel, hours: 9, minutes: 15)
+        viewModel.performOperation("+")
+
+        // Wednesday: 7:45
+        enterTime(viewModel, hours: 7, minutes: 45)
+        viewModel.performOperation("+")
+
+        // Thursday: 8:00
+        enterTime(viewModel, hours: 8, minutes: 0)
+        viewModel.performOperation("+")
+
+        // Friday: 6:30
+        enterTime(viewModel, hours: 6, minutes: 30)
+
+        // Total: 40:00
+        #expect(viewModel.resultText == "40:00")
+
+        viewModel.calculate()
+        #expect(viewModel.displayText == "40:00")
     }
 }

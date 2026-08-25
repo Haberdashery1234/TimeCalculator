@@ -47,7 +47,7 @@ struct TimeCardViewModelTests {
         // 8h + 4.5h = 12.5h = 45,000 seconds
         #expect(viewModel.totalTime == 45000)
     }
-
+    
     @Test("Total time is zero when there are no entries")
     func totalTimeWithNoEntries() {
         let viewModel = TimeCardViewModel()
